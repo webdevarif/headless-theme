@@ -8,8 +8,6 @@ class GlobalSettings extends BaseController {
     // Register hooks
     public function register() {
         add_action('rest_api_init', [$this, 'registerRoutes']);
-        add_action('after_setup_theme', [$this, 'setup_theme']);
-        add_action( 'customize_register', [$this, 'customize_register'] );
     }
 
     // Register the custom REST route
@@ -54,33 +52,6 @@ class GlobalSettings extends BaseController {
         }
         return ob_get_clean();
     }
-
-    // Setup Default Theme
-    public function setup_theme() {
-        add_theme_support(
-            'custom-logo',
-            array(
-                'height'      => 250,
-                'width'       => 250,
-                'flex-width'  => true,
-                'flex-height' => true,
-            )
-        );
-    }
-    
-    /**
-     * Digital Farmers Theme Customizer
-     *
-     * @package HeadlessCMS
-     */
-
-    /**
-     * Add postMessage support for site title and description for the Theme Customizer.
-     *
-     * @param WP_Customize_Manager $wp_customize Theme Customizer object.
-     */
-    function customize_register( $wp_customize ) {}
-
     
     /**
      * Determine whether the current environment is production.

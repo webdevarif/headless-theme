@@ -19,7 +19,10 @@ class Blocks {
      * @see https://developer.wordpress.org/reference/functions/register_block_type/
      */
     public function registerBlocks() {
-        register_block_type( HEADLESS_THEME_URL_PATH . '/build/blog-insight' );
-        register_block_type( HEADLESS_THEME_URL_PATH . '/build/hero-banner' );
+        register_block_type( HEADLESS_THEME_ABS_PATH . '/build/block-blog-insight' );
+
+        // Register the hero banner block
+        register_block_type( HEADLESS_THEME_ABS_PATH . '/build/block-hero-banner' );
+    
     }
 }
