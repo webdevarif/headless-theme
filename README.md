@@ -71,4 +71,4 @@ Good luck!
 
 ### RestAPI
 
-- `theme global settings` : [DOMAIN]/`wp-json/wgp/v1/global-settings`.
+- `theme global settings` : [DOMAIN]/`wp-json/headless-theme/v1/global-settings`.

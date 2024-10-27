@@ -14,7 +14,7 @@ class GlobalSettings extends BaseController {
 
     // Register the custom REST route
     public function registerRoutes() {
-        register_rest_route('wgp/v1', '/global-settings', [
+        register_rest_route('headless-theme/v1', '/global-settings', [
             'methods' => 'GET',
             'callback' => [$this, 'getGlobalSettings'],
             'permission_callback' => '__return_true',
