@@ -68,3 +68,7 @@ $ npm install
 Now you're ready to go! The next step is easy to say, but harder to do: make an awesome WordPress theme. :)
 
 Good luck!
+
+### RestAPI
+
+- `theme global settings` : [Host]/`/wp-json/wgp/v1/global-settings`.
