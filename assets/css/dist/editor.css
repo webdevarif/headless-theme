@@ -1,0 +1,13 @@
+html :where(.wp-block) {
+  max-width: 100%;
+  margin: 0;
+}
+
+.ht-form {
+  margin-bottom: 0.75rem;
+}
+.ht-form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}/*# sourceMappingURL=editor.css.map */

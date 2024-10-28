@@ -8,6 +8,8 @@
  *
  * @package Headless_Theme
  */
+// Assuming autoload or correct path inclusion for the TemplateTags class
+use Inc\Base\TemplateTags;
 
 ?>
 <!doctype html>
@@ -25,5 +27,12 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'headless-theme' ); ?></a>
 
-	<?php get_template_part( 'template-parts/content', 'header' ); ?>
+<?php 
+// Instantiate the TemplateTags class
+	$template_tags = new TemplateTags();
+
+	// Call the headless_template method with appropriate arguments
+	// Replace 'header' and 'template-parts/content' with actual parameters
+	$template_tags->headless_template('header', 'template-parts/default-header');
+?>
 

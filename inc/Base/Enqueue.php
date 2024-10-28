@@ -37,7 +37,8 @@ class Enqueue extends BaseController
         // Enqueue admin CSS
         wp_enqueue_style(
             Init::prefix() . '-admin-style',
-            Init::assets_url() . '/css/Admin/admin.css',
+            // Init::assets_url() . '/css/Admin/admin.css',
+            Init::assets_url() . '/css/dist/admin.min.css',
             [],
             Init::version()
         );
@@ -72,7 +73,8 @@ class Enqueue extends BaseController
         // Register editor CSS
         wp_register_style(
             Init::prefix() . '-editor-style',
-            Init::assets_url() . "/css/Editor/editor{$suffix}.css",
+            // Init::assets_url() . "/css/Editor/editor{$suffix}.css",
+            Init::assets_url() . "/css/dist/editor.min.css",
             [],
             Init::version()
         );
@@ -94,7 +96,8 @@ class Enqueue extends BaseController
         // Enqueue frontend CSS
         wp_enqueue_style(
             Init::prefix() . '-style',
-            Init::assets_url() . "/css/Frontend/style{$suffix}.css",
+            // Init::assets_url() . "/css/Frontend/style{$suffix}.css",
+            Init::assets_url() . "/css/dist/style.min.css",
             [],
             Init::version()
         );

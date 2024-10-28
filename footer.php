@@ -9,9 +9,15 @@
  * @package Headless_Theme
  */
 
+// Assuming autoload or correct path inclusion for the TemplateTags class
+use Inc\Base\TemplateTags;
 ?>
 
-	<?php get_template_part( 'template-parts/content', 'footer' ); ?>
+<?php 
+// Instantiate the TemplateTags class
+	$template_tags = new TemplateTags();
+	$template_tags->headless_template('footer', 'template-parts/default-footer');
+?>
 	
 </div><!-- #page -->
 

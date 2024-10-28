@@ -11,8 +11,6 @@ class Templates extends BaseController {
         add_action( 'init', [ $this, 'registerCustomPostType' ] );
         add_action('admin_menu', [$this, 'addMenus']);
         add_action('init', [$this, 'registerTemplatesMeta']);
-        // add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
-
 
         // Add columns to the templates list table
         add_filter('manage_headless_templates_posts_columns', [$this, 'setCustomColumns']);
@@ -66,14 +64,26 @@ class Templates extends BaseController {
             'edit.php?post_type=headless_templates' // Linking directly to the post type
         );
     }
-
-    public function registerTemplatesMeta(){
-        register_post_meta('headless_templates', 'template_display_option', [
-            'type' => 'string',
-            'single' => true,
-            'show_in_rest' => true,
-        ]);
     
+    public function registerTemplatesMeta() {
+        register_post_meta('headless_templates', 'template_display_option', [
+            'type' => 'object',
+            'single' => true,
+            'show_in_rest' => [
+                'schema' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'value' => [
+                            'type' => 'string',
+                        ],
+                        'label' => [
+                            'type' => 'string',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
         register_post_meta('headless_templates', 'template_selected_pages', [
             'type' => 'array',
             'single' => true,
@@ -81,12 +91,20 @@ class Templates extends BaseController {
                 'schema' => [
                     'type' => 'array',
                     'items' => [
-                        'type' => 'integer',
+                        'type' => 'object',
+                        'properties' => [
+                            'value' => [
+                                'type' => 'number',
+                            ],
+                            'label' => [
+                                'type' => 'string',
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]);
-    
+
         register_post_meta('headless_templates', 'template_exclude_pages', [
             'type' => 'array',
             'single' => true,
@@ -94,29 +112,40 @@ class Templates extends BaseController {
                 'schema' => [
                     'type' => 'array',
                     'items' => [
-                        'type' => 'integer',
+                        'type' => 'object',
+                        'properties' => [
+                            'value' => [
+                                'type' => 'number',
+                            ],
+                            'label' => [
+                                'type' => 'string',
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]);
-    
+
         register_post_meta('headless_templates', 'template_type', [
             'type' => 'string',
             'single' => true,
             'show_in_rest' => true,
         ]);
     }
-    
 
     public function setCustomColumns($columns) {
-        // Remove the date column
+        // Define new columns
+        $newColumns = [
+            'template_type' => __('Template Type', 'headless-theme'),
+            'display_on_data' => __('Display On', 'headless-theme'),
+        ];
+
+        // Insert new columns after removing the date column
         unset($columns['date']);
+
+        $columns = array_merge($columns, $newColumns);
         
-        // Add new columns
-        $columns['template_type'] = __('Template Type', 'headless-theme');
-        $columns['display_on_data'] = __('Display On Data', 'headless-theme');
-        
-        // Re-add the date column
+        // Re-add the date column at the end
         $columns['date'] = __('Date', 'headless-theme');
 
         return $columns;
@@ -131,11 +160,10 @@ class Templates extends BaseController {
                 break;
             
             case 'display_on_data':
-                // Retrieve custom field data or set default value
+                // Retrieve custom field data as an object
                 $displayOnData = get_post_meta($post_id, 'template_display_option', true);
-                echo !empty($displayOnData) ? esc_html($displayOnData) : __('N/A', 'headless-theme');
+                echo !empty($displayOnData['label']) ? esc_html($displayOnData['label']) : __('N/A', 'headless-theme');
                 break;
         }
     }
-
 }
