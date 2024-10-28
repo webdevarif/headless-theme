@@ -44,3 +44,21 @@ add_action('after_setup_theme', 'activate_headless_theme');
 
 // Optionally call deactivation function when theme is switched
 add_action('switch_theme', 'deactivate_headless_theme');
+
+
+
+/**
+ * Enqueue Editor assets for the theme.
+ */
+// function theme_enqueue_editor_assets() {
+//     $asset_file = include( get_stylesheet_directory() . '/build/index.asset.php');
+
+//     wp_enqueue_script(
+//         'theme-editor-scripts',
+//         get_stylesheet_directory_uri() . '/build/index.js',
+//         $asset_file['dependencies'],
+//         $asset_file['version']
+//     );
+// }
+// add_action( 'enqueue_block_editor_assets', 'theme_enqueue_editor_assets' );
+

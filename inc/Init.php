@@ -117,8 +117,8 @@ final class Init
             Base\ThemeCustomize::class,
             Base\Blocks::class,
             
-            // AdminMenu\Welcome::class,
-            // AdminMenu\OptionsPages::class,
+            AdminMenu\Welcome::class,
+            AdminMenu\Templates::class,
             
             // Rest API
             RestAPI\Setup::class,

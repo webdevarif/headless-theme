@@ -26,10 +26,25 @@ class GlobalSettings extends BaseController {
         $footer = $this->captureTemplateOutput(HEADLESS_THEME_URL_PATH . 'footer.php');
         $suffix = $this->is_production() ? '.min' : '';
 
+        // Fetch all color settings from theme modifications
+        $headless_mod = get_theme_mod('headless_theme_colors', []);
+        
+        // Access individual colors with fallbacks if not set
+        $primary_1 = isset($headless_mod['primary_1']) ? $headless_mod['primary_1'] : '#33c6f3';
+        $primary_2 = isset($headless_mod['primary_2']) ? $headless_mod['primary_2'] : '#33c6f3';
+        $secondary_1 = isset($headless_mod['secondary_1']) ? $headless_mod['secondary_1'] : '#75e900';
+        $secondary_2 = isset($headless_mod['secondary_2']) ? $headless_mod['secondary_2'] : '#f3ca20';
+
         return rest_ensure_response([
             'identity' => $identity,
             'header' => $header,
             'footer' => $footer,
+            'colors' => [
+                'primary-1' => $primary_1,
+                'primary-2' => $primary_2,
+                'secondary-1' => $secondary_1,
+                'secondary-2' => $secondary_2,
+            ],
             'styleCss' => HEADLESS_THEME_ASSETS_URL_PATH . "/css/style{$suffix}.css", // Corrected usage of quotes
         ]);
     }

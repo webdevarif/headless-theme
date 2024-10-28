@@ -35,56 +35,49 @@ class ThemeCustomize extends BaseController
             )
         );
     }
+
     /**
      * Sets up theme defaults and registers support for various WordPress features.
      */
     public function headless_theme_customize_register($wp_customize) {
-        // Primary Color 1
-        $wp_customize->add_setting('primary_color_1', [
-            'default'   => '#33c6f3',
-            'transport' => 'refresh',
+        // Add a new section for the Headless Theme Colors
+        $wp_customize->add_section('headless_theme_colors', [
+            'title'    => __('Headless Theme Colors', 'headless-theme'),
+            'priority' => 30,
         ]);
-    
-        $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'primary_color_1', [
-            'label'    => __('Primary Color 1', 'your-theme-textdomain'),
-            'section'  => 'colors',
-            'settings' => 'primary_color_1',
-        ]));
-        // Primary Color 2
-        $wp_customize->add_setting('primary_color_2', [
-            'default'   => '#33c6f3',
-            'transport' => 'refresh',
-        ]);
-    
-        $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'primary_color_2', [
-            'label'    => __('Primary Color 2', 'your-theme-textdomain'),
-            'section'  => 'colors',
-            'settings' => 'primary_color_2',
-        ]));
-    
-        // Secondary Color 1
-        $wp_customize->add_setting('secondary_color_1', [
-            'default'   => '#75e900',
-            'transport' => 'refresh',
-        ]);
-    
-        $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'secondary_color_1', [
-            'label'    => __('Secondary Color 1', 'your-theme-textdomain'),
-            'section'  => 'colors',
-            'settings' => 'secondary_color_1',
-        ]));
-    
-        // Secondary Color 2
-        $wp_customize->add_setting('secondary_color_2', [
-            'default'   => '#f3ca20',
-            'transport' => 'refresh',
-        ]);
-    
-        $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, 'secondary_color_2', [
-            'label'    => __('Secondary Color 2', 'your-theme-textdomain'),
-            'section'  => 'colors',
-            'settings' => 'secondary_color_2',
-        ]));
+
+        // Define the settings array keys
+        $color_keys = [
+            'primary_1' => __('Primary Color 1', 'headless-theme'),
+            'primary_2' => __('Primary Color 2', 'headless-theme'),
+            'secondary_1' => __('Secondary Color 1', 'headless-theme'),
+            'secondary_2' => __('Secondary Color 2', 'headless-theme'),
+        ];
+
+        // Default color values
+        $default_colors = [
+            'primary_1' => '#33c6f3',
+            'primary_2' => '#33c6f3',
+            'secondary_1' => '#75e900',
+            'secondary_2' => '#f3ca20',
+        ];
+
+        // Loop through each color setting
+        foreach ($color_keys as $key => $label) {
+            $setting_id = "headless_theme_colors[$key]";
+
+            $wp_customize->add_setting($setting_id, [
+                'default'   => $default_colors[$key],
+                'type'      => 'theme_mod', // Store it in theme_mod instead of option
+                'transport' => 'refresh',
+            ]);
+
+            $wp_customize->add_control(new \WP_Customize_Color_Control($wp_customize, $setting_id, [
+                'label'    => $label,
+                'section'  => 'headless_theme_colors',
+                'settings' => $setting_id,
+            ]));
+        }
     }
-    
+
 }
