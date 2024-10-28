@@ -8,37 +8,20 @@ use \Inc\Base\BaseController;
 /**
  * Class TemplateTags
  *
- * Handles the enqueuing of scripts and styles for admin, frontend, and shared use.
+ * Handles the loading of templates based on custom post types and conditions.
  *
  * @since 1.0.0
  */
 class TemplateTags extends BaseController
 {
     /**
-     * Register enqueue hooks for admin and frontend.
-     */
-    public function register()
-    {
-        add_action('init', [$this, 'check_and_load_template']);
-    }
-
-    /**
-     * Function to check and load the appropriate template.
-     */
-    public function check_and_load_template()
-    {
-        // Example call to load headless templates.
-        // Replace 'header' and 'template-parts/content' with actual values as needed.
-        $this->headless_template('header', 'template-parts/content');
-    }
-
-    /**
      * Load a headless template or fall back to a default template part.
      *
      * @param string $post_type The custom post type (e.g., 'header').
      * @param string $default_template_path The default template part path (e.g., 'template-parts/content').
+     * @param int|null $current_page_id The current page ID to evaluate template application.
      */
-    public function headless_template($post_type, $default_template_path)
+    public function headless_template($post_type, $default_template_path, $current_page_id = null)
     {
         $args = [
             'post_type' => 'headless_templates',
@@ -63,14 +46,14 @@ class TemplateTags extends BaseController
 
                 switch ($display_option) {
                     case 'entire_site':
-                        if (empty($exclude_pages) || !$this->is_current_page_in_list($exclude_pages)) {
+                        if (empty($exclude_pages) || !$this->is_current_page_in_list($exclude_pages, $current_page_id)) {
                             the_content();
                             $template_applied = true;
                         }
                         break;
 
                     case 'specific_pages':
-                        if ($this->is_current_page_in_list($selected_pages)) {
+                        if ($this->is_current_page_in_list($selected_pages, $current_page_id)) {
                             the_content();
                             $template_applied = true;
                         }
@@ -90,15 +73,16 @@ class TemplateTags extends BaseController
     }
 
     /**
-     * Private function to check if the current page matches any in the provided list.
+     * Private function to check if the provided page ID matches any in the given list.
      *
      * @param array $pages Array of pages to check against.
+     * @param int|null $current_page_id The current page ID to compare.
      * @return bool True if the current page is in the list, false otherwise.
      */
-    private function is_current_page_in_list(array $pages): bool
+    private function is_current_page_in_list(array $pages, $current_page_id): bool
     {
         foreach ($pages as $page) {
-            if (is_page($page['value'])) {
+            if ((int)$page['value'] === $current_page_id) {
                 return true;
             }
         }

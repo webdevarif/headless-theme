@@ -5,6 +5,8 @@ namespace Inc\RestAPI;
 use \Inc\Base\BaseController;
 use \WP_Error;
 use \WP_REST_Request;
+// Assuming autoload or correct path inclusion for the TemplateTags class
+use Inc\Base\TemplateTags;
 
 class PageDetails extends BaseController {
 
@@ -105,12 +107,29 @@ class PageDetails extends BaseController {
      * @return array Filtered data.
      */
     private function filterPageData($data) {
+        // Instantiate the TemplateTags class
+        $template_tags = new TemplateTags();
+
+        // Capture header content
+        ob_start();
+        // Call the headless_template method, providing the necessary parameters
+        $template_tags->headless_template('header', 'template-parts/default-header', $data['id'] ?? null);
+        $header_content = ob_get_clean();
+
+        // Capture footer content
+        ob_start();
+        // Call the headless_template method, providing the necessary parameters
+        $template_tags->headless_template('footer', 'template-parts/default-footer', $data['id'] ?? null);
+        $footer_content = ob_get_clean();
+
         return [
             'status' => 200,
             'id' => $data['id'] ?? null,
             'title' => $data['title']['rendered'] ?? null,
             'slug' => $data['slug'] ?? null,
             'content' => '<div class="site-main">' . ($data['content']['rendered'] ?? '') . '</div>' ?? null,
+            'header' => $header_content,
+            'footer' => $footer_content,
             'featured_media' => $data['featured_media'] ?? null,
         ];
     }

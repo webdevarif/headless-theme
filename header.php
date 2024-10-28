@@ -9,8 +9,6 @@
  * @package Headless_Theme
  */
 // Assuming autoload or correct path inclusion for the TemplateTags class
-use Inc\Base\TemplateTags;
-
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -26,13 +24,6 @@ use Inc\Base\TemplateTags;
 <?php wp_body_open(); ?>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'headless-theme' ); ?></a>
-
-<?php 
-// Instantiate the TemplateTags class
-	$template_tags = new TemplateTags();
-
-	// Call the headless_template method with appropriate arguments
-	// Replace 'header' and 'template-parts/content' with actual parameters
-	$template_tags->headless_template('header', 'template-parts/default-header');
-?>
+	
+	<?php require_once HEADLESS_THEME_TEMPLATES_PATH . '/header.php'; ?>
 
