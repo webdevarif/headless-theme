@@ -110,14 +110,15 @@ final class Init
      */
     public static function get_services() {
         return [
+            // BASE
             Base\Enqueue::class,
             Base\PageTemplates::class,
             Base\SvgSupport::class,
-            Base\Customizer::class,
+            Base\ThemeCustomize::class,
             Base\Blocks::class,
             
-            // AdminMenu\Welcome::class,
-            // AdminMenu\OptionsPages::class,
+            AdminMenu\Welcome::class,
+            AdminMenu\Templates::class,
             
             // Rest API
             RestAPI\Setup::class,

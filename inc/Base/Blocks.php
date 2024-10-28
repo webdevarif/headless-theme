@@ -10,7 +10,6 @@ class Blocks {
         add_action( 'init', [$this, 'registerBlocks'] );
     }
 
-
     /**
      * Registers the block using the metadata loaded from the `block.json` file.
      * Behind the scenes, it registers also all assets so they can be enqueued
@@ -19,7 +18,15 @@ class Blocks {
      * @see https://developer.wordpress.org/reference/functions/register_block_type/
      */
     public function registerBlocks() {
-        register_block_type( HEADLESS_THEME_URL_PATH . '/build/blog-insight' );
-        register_block_type( HEADLESS_THEME_URL_PATH . '/build/hero-banner' );
+        // Array of block directories relative to the build path
+        $blocks = [
+            'blog-insight',
+            'hero-banner'
+        ];
+
+        // Loop through each block and register it
+        foreach ($blocks as $block) {
+            register_block_type( HEADLESS_THEME_ABS_PATH . '/build/blocks/' . $block );
+        }
     }
 }

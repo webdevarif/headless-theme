@@ -8,8 +8,6 @@ class GlobalSettings extends BaseController {
     // Register hooks
     public function register() {
         add_action('rest_api_init', [$this, 'registerRoutes']);
-        add_action('after_setup_theme', [$this, 'setup_theme']);
-        add_action( 'customize_register', [$this, 'customize_register'] );
     }
 
     // Register the custom REST route
@@ -28,10 +26,25 @@ class GlobalSettings extends BaseController {
         $footer = $this->captureTemplateOutput(HEADLESS_THEME_URL_PATH . 'footer.php');
         $suffix = $this->is_production() ? '.min' : '';
 
+        // Fetch all color settings from theme modifications
+        $headless_mod = get_theme_mod('headless_theme_colors', []);
+        
+        // Access individual colors with fallbacks if not set
+        $primary_1 = isset($headless_mod['primary_1']) ? $headless_mod['primary_1'] : '#33c6f3';
+        $primary_2 = isset($headless_mod['primary_2']) ? $headless_mod['primary_2'] : '#33c6f3';
+        $secondary_1 = isset($headless_mod['secondary_1']) ? $headless_mod['secondary_1'] : '#75e900';
+        $secondary_2 = isset($headless_mod['secondary_2']) ? $headless_mod['secondary_2'] : '#f3ca20';
+
         return rest_ensure_response([
             'identity' => $identity,
             'header' => $header,
             'footer' => $footer,
+            'colors' => [
+                'primary-1' => $primary_1,
+                'primary-2' => $primary_2,
+                'secondary-1' => $secondary_1,
+                'secondary-2' => $secondary_2,
+            ],
             'styleCss' => HEADLESS_THEME_ASSETS_URL_PATH . "/css/style{$suffix}.css", // Corrected usage of quotes
         ]);
     }
@@ -54,33 +67,6 @@ class GlobalSettings extends BaseController {
         }
         return ob_get_clean();
     }
-
-    // Setup Default Theme
-    public function setup_theme() {
-        add_theme_support(
-            'custom-logo',
-            array(
-                'height'      => 250,
-                'width'       => 250,
-                'flex-width'  => true,
-                'flex-height' => true,
-            )
-        );
-    }
-    
-    /**
-     * Digital Farmers Theme Customizer
-     *
-     * @package HeadlessCMS
-     */
-
-    /**
-     * Add postMessage support for site title and description for the Theme Customizer.
-     *
-     * @param WP_Customize_Manager $wp_customize Theme Customizer object.
-     */
-    function customize_register( $wp_customize ) {}
-
     
     /**
      * Determine whether the current environment is production.

@@ -20,14 +20,14 @@ class PageDetails extends BaseController {
      */
     public function registerRoutes() {
         // Route for frontpage data
-        register_rest_route('wgp/v1', '/page', [
+        register_rest_route('headless-theme/v1', '/page', [
             'methods' => 'GET',
             'callback' => [$this, 'getFrontPage'],
             'permission_callback' => '__return_true',  // Allow all requests (can be customized)
         ]);
 
         // Dynamic route for specific page by slug
-        register_rest_route('wgp/v1', '/page/(?P<slug>[a-zA-Z0-9-]+)', [
+        register_rest_route('headless-theme/v1', '/page/(?P<slug>[a-zA-Z0-9-]+)', [
             'methods' => 'GET',
             'callback' => [$this, 'getPageBySlug'],
             'args' => [

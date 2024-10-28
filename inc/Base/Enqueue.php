@@ -37,7 +37,7 @@ class Enqueue extends BaseController
         // Enqueue admin CSS
         wp_enqueue_style(
             Init::prefix() . '-admin-style',
-            Init::assets_url() . '/css/admin.css',
+            Init::assets_url() . '/css/Admin/admin.css',
             [],
             Init::version()
         );
@@ -45,7 +45,7 @@ class Enqueue extends BaseController
         // Enqueue admin JavaScript
         wp_enqueue_script(
             Init::prefix() . '-admin-script',
-            Init::assets_url() . '/js/admin.js',
+            Init::assets_url() . '/js/Admin/admin.js',
             [],
             Init::version(),
             true
@@ -59,17 +59,27 @@ class Enqueue extends BaseController
     {
         // Determine file suffix based on environment (minified for production)
         $suffix = $this->is_production() ? '.min' : '';
+        $asset_file = include( get_stylesheet_directory() . '/build/index.asset.php');
+    
+        // Register editor SCRIPTS
+        wp_enqueue_script(
+            Init::prefix() . '-editor-scripts',
+            get_stylesheet_directory_uri() . '/build/index.js',
+            $asset_file['dependencies'],
+            $asset_file['version']
+        );
     
         // Register editor CSS
         wp_register_style(
             Init::prefix() . '-editor-style',
-            Init::assets_url() . "/css/editor{$suffix}.css",
+            Init::assets_url() . "/css/Editor/editor{$suffix}.css",
             [],
             Init::version()
         );
     
         // Enqueue editor CSS after registering
         wp_enqueue_style(Init::prefix() . '-editor-style');
+        wp_enqueue_scripts(Init::prefix() . '-editor-scripts',);
         
     }
 
@@ -84,7 +94,7 @@ class Enqueue extends BaseController
         // Enqueue frontend CSS
         wp_enqueue_style(
             Init::prefix() . '-style',
-            Init::assets_url() . "/css/style{$suffix}.css",
+            Init::assets_url() . "/css/Frontend/style{$suffix}.css",
             [],
             Init::version()
         );
@@ -92,7 +102,7 @@ class Enqueue extends BaseController
         // Enqueue frontend JavaScript with jQuery as a dependency
         wp_enqueue_script(
             Init::prefix() . '-script',
-            Init::assets_url() . "/js/main{$suffix}.js",
+            Init::assets_url() . "/js/Frontend/main{$suffix}.js",
             ['jquery'],
             Init::version(),
             true
