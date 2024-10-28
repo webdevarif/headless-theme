@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "wp-scripts start",
-    "sass:watch": "sass --watch ./assets/sass/Frontend/:./assets/css/Frontend/ ./assets/sass/Editor/:./assets/css/Editor/ ./assets/sass/Admin/:./assets/css/Admin/",
+    "sass:watch": "sass ./assets/sass/Frontend/:./assets/css/Frontend/ ./assets/sass/Editor/:./assets/css/Editor/ ./assets/sass/Admin/:./assets/css/Admin/ --watch",
     "build": "wp-scripts build"
   },
   "author": "",
