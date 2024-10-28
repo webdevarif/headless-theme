@@ -31,7 +31,7 @@ class PageTemplates {
      */
     public static function wgp_load_full_width_template($template) {
         if (is_page_template('templates/full-width.php')) {
-            return HEADLESS_CMS_TEMPLATES_PATH . '/full-width.php';
+            return HEADLESS_THEME_TEMPLATES_PATH . '/full-width.php';
         }
         return $template;
     }
