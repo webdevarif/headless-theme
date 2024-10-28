@@ -1,1 +1,12 @@
+.header {
+  background-color: red;
+}
+.header__logo {
+  height: 100px;
+}
+.header__logo img {
+  max-height: 100%;
+  width: auto;
+}
+
 /*# sourceMappingURL=style.css.map */

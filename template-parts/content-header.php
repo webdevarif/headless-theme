@@ -48,8 +48,8 @@ endif;
 
 // Display default header if no template is applied
 if (!$template_applied) {?>
-    <header id="masthead" class="site-header">
-        <div class="site-branding">
+    <header id="masthead" class="site-header header">
+        <div class="header__logo">
             <?php
             the_custom_logo();
             if ( is_front_page() && is_home() ) :

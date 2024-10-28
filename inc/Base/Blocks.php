@@ -8,12 +8,30 @@ class Blocks {
      */
     public function register() {
         add_action( 'init', [$this, 'registerBlocks'] );
+        add_filter( 'block_categories_all', [$this, 'addCustomBlockCategory'], 10, 2 ); // Updated to call a public method
     }
 
     /**
-     * Registers the block using the metadata loaded from the `block.json` file.
-     * Behind the scenes, it registers also all assets so they can be enqueued
-     * through the block editor in the corresponding context.
+     * Adds a custom block category.
+     *
+     * @param array $categories Existing block categories.
+     * @param object $post Current post object.
+     * @return array Modified block categories.
+     */
+    public function addCustomBlockCategory($categories, $post) {
+        return array_merge(
+            $categories,
+            [
+                [
+                    'slug' => 'headless-theme',
+                    'title' => __('Headless Theme', 'headless-theme'),
+                ]
+            ]
+        );
+    }
+
+    /**
+     * Registers blocks using metadata loaded from `block.json` files.
      *
      * @see https://developer.wordpress.org/reference/functions/register_block_type/
      */
