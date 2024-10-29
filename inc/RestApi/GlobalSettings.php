@@ -22,8 +22,6 @@ class GlobalSettings extends BaseController {
     // Callback for the REST route to get global settings
     public function getGlobalSettings() {
         $identity = $this->getSiteIdentity();
-        $header = $this->captureTemplateOutput(HEADLESS_THEME_URL_PATH . 'header.php');
-        $footer = $this->captureTemplateOutput(HEADLESS_THEME_URL_PATH . 'footer.php');
         $suffix = $this->is_production() ? '.min' : '';
 
         // Fetch all color settings from theme modifications
@@ -37,15 +35,13 @@ class GlobalSettings extends BaseController {
 
         return rest_ensure_response([
             'identity' => $identity,
-            'header' => $header,
-            'footer' => $footer,
             'colors' => [
                 'primary-1' => $primary_1,
                 'primary-2' => $primary_2,
                 'secondary-1' => $secondary_1,
                 'secondary-2' => $secondary_2,
             ],
-            'styleCss' => HEADLESS_THEME_ASSETS_URL_PATH . "/css/style{$suffix}.css", // Corrected usage of quotes
+            'styleCss' => HEADLESS_THEME_ASSETS_URL_PATH . "/css/Frontend/style{$suffix}.css", // Corrected usage of quotes
         ]);
     }
 

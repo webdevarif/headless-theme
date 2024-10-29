@@ -1,5 +1,8 @@
 
 // style.scss
-@use '../base/index';
+@import '../abstracts/index';
+@import '../base/index';
 
-@use '../layouts/header'; // Use your actual path here if different
+@import '../layouts/header'; // Use your actual path here if different
+
+@import '../layouts/footer'; // Use your actual path here if different

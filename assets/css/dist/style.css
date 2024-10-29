@@ -25,4 +25,9 @@ body {
 .header__logo img {
   max-height: 100%;
   width: auto;
+}
+
+.footer {
+  background-color: var(--color-secondary-2, #0C1A1A);
+  color: var(--color-white, #fff);
 }/*# sourceMappingURL=style.css.map */
